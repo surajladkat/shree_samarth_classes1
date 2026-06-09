@@ -293,9 +293,40 @@ export default function TeacherDashboard() {
   const pendingEvaluation = submissions.filter(s => s.status === 'SUBMITTED').length;
 
   return (
+<<<<<<< HEAD
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 p-1">
       {/* Sidebar layout */}
       <div className="bg-white rounded-2xl border border-gray-100 p-5 shadow-sm col-span-1 h-fit space-y-2">
+=======
+    <>
+    {/* Mobile Tab Bar — visible only below lg */}
+    <div className="lg:hidden flex items-center gap-1.5 overflow-x-auto pb-1 -mx-1 px-1">
+      {[
+        { key: 'submissions',    icon: <CheckSquare className="w-4 h-4" />,   label: 'Grades'     },
+        { key: 'material',       icon: <Upload className="w-4 h-4" />,        label: 'Material'   },
+        { key: 'assignment',     icon: <PlusCircle className="w-4 h-4" />,    label: 'Homework'   },
+        { key: 'communications', icon: <MessageSquare className="w-4 h-4" />, label: 'Parents'    },
+        { key: 'attendance',     icon: <CheckSquare className="w-4 h-4" />,   label: 'Attendance' },
+        { key: 'timetable',      icon: <Calendar className="w-4 h-4" />,      label: 'Timetable'  },
+      ].map(({ key, icon, label }) => (
+        <button
+          key={key}
+          onClick={() => setActiveSubTab(key as typeof activeSubTab)}
+          className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
+            activeSubTab === key
+              ? 'bg-indigo-600 text-white shadow-sm'
+              : 'bg-white text-slate-600 border border-slate-200'
+          }`}
+        >
+          {icon}{label}
+        </button>
+      ))}
+    </div>
+
+    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 p-1">
+      {/* Sidebar layout — hidden on mobile */}
+      <div className="hidden lg:block bg-white rounded-2xl border border-gray-100 p-5 shadow-sm col-span-1 h-fit space-y-2">
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
         <div className="px-3 py-2 mb-4 border-b border-gray-100 pb-4">
           <p className="text-xs font-semibold text-emerald-600 tracking-wider uppercase">Faculty Lounge</p>
           <p className="text-sm font-bold text-gray-800 mt-1">{currentUser?.name}</p>
@@ -387,7 +418,11 @@ export default function TeacherDashboard() {
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: "easeOut" }}
+<<<<<<< HEAD
         className="lg:col-span-3 space-y-6"
+=======
+        className="col-span-1 lg:col-span-3 space-y-6"
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
       >
 
         {/* Dashboard completion banner helper */}
@@ -428,6 +463,7 @@ export default function TeacherDashboard() {
                 {teacherSubmissions.length === 0 ? (
                   <p className="text-xs italic text-slate-400 py-6 text-center font-sans">No student assignments submitted yet.</p>
                 ) : (
+<<<<<<< HEAD
                   // Added overflow-x-auto and min-w
                   <div className="max-h-[500px] overflow-y-auto overflow-x-auto pr-1">
                     <div className="space-y-4 min-w-[600px]">
@@ -510,6 +546,87 @@ export default function TeacherDashboard() {
                         );
                       })}
                     </div>
+=======
+                  <div className="space-y-4 max-h-[500px] overflow-y-auto pr-1">
+                    {teacherSubmissions.map(sub => {
+                      const displayContent = decryptData(sub.submittedContent, 'SCHOOL_SECRET_KEY');
+
+                      return (
+                        <div key={sub.id} className="border border-slate-200 rounded-lg p-4 bg-slate-50/50 space-y-3.5 hover:border-blue-200 transition-colors">
+                          <div className="flex flex-col sm:flex-row justify-between items-start gap-2">
+                            <div>
+                              <p className="text-xs font-bold text-slate-800 font-sans">{sub.assignmentTitle}</p>
+                              <p className="text-[10px] text-slate-400 mt-0.5 font-sans">
+                                Submitted by <span className="font-semibold text-blue-700">{sub.studentName}</span> (Class {sub.classGrade}) • {new Date(sub.submittedAt).toLocaleDateString()}
+                              </p>
+                            </div>
+                            
+                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold font-mono ${
+                              sub.status === 'GRADED' 
+                                ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' 
+                                : 'bg-blue-50 text-blue-700 border border-blue-100'
+                            }`}>
+                              {sub.status === 'GRADED' ? `Graded: ${sub.grade}` : 'Pending review'}
+                            </span>
+                          </div>
+
+                          {/* Attached real file, if exists */}
+                          {sub.fileName && (
+                            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-emerald-50/50 border border-emerald-100 rounded-lg p-3 text-xs">
+                              <div className="flex items-center gap-1.5 min-w-0">
+                                <FileText className="w-4 h-4 text-emerald-600 shrink-0" />
+                                <div className="min-w-0">
+                                  <span className="font-bold text-emerald-900 truncate block font-sans">{sub.fileName}</span>
+                                  <span className="text-[10px] text-emerald-750 font-mono block">Attached File size: {sub.fileSize}</span>
+                                </div>
+                              </div>
+                              <button
+                                type="button"
+                                onClick={() => handleDownloadHomeworkFile(sub.fileName!, sub.submittedContent)}
+                                className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[10px] rounded-lg flex items-center justify-center gap-1.5 transition whitespace-nowrap cursor-pointer hover:shadow-xs"
+                              >
+                                <Download className="w-3.5 h-3.5 text-white" />
+                                Download Answer Sheet
+                              </button>
+                            </div>
+                          )}
+
+                          {/* Student answer preview */}
+                          <div className="bg-white border border-slate-200 rounded-lg p-3 space-y-2">
+                            <div className="border-b border-slate-100 pb-1.5 font-sans font-sans">
+                              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                                Student Submitted Answer
+                              </span>
+                            </div>
+
+                            <p className="font-sans text-xs text-slate-700 whitespace-pre-wrap leading-relaxed break-all">
+                              {displayContent}
+                            </p>
+                          </div>
+
+                          {sub.feedback && (
+                            <div className="bg-blue-50/40 p-2.5 rounded border border-blue-100 text-xs">
+                              <p className="font-bold text-blue-800 font-mono">Teacher Evaluation Remarks:</p>
+                              <p className="text-slate-650 mt-1 italic font-sans">"{sub.feedback}"</p>
+                            </div>
+                          )}
+
+                          {sub.status === 'SUBMITTED' && (
+                            <button
+                              onClick={() => {
+                                setSelectedSubId(sub.id);
+                                setInputGrade('');
+                                setInputFeedback('');
+                              }}
+                              className="w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded-lg text-xs font-semibold hover:bg-blue-700 transition cursor-pointer font-sans"
+                            >
+                              Assess & Enter Grade
+                            </button>
+                          )}
+                        </div>
+                      );
+                    })}
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
                   </div>
                 )}
               </div>
@@ -1005,6 +1122,7 @@ export default function TeacherDashboard() {
                   <h3 className="text-xs font-bold text-slate-700 uppercase tracking-wide font-mono">Secure Communications Log</h3>
                 </div>
 
+<<<<<<< HEAD
                 {/* Added overflow-x-auto and min-w */}
                 <div className="flex-1 overflow-y-auto overflow-x-auto pr-1 py-1">
                   <div className="space-y-3.5 min-w-[400px]">
@@ -1035,6 +1153,35 @@ export default function TeacherDashboard() {
                       })
                     )}
                   </div>
+=======
+                <div className="flex-1 overflow-y-auto space-y-3.5 pr-1 py-1">
+                  {filteredMessages.length === 0 ? (
+                    <div className="text-center py-10">
+                      <p className="text-xs text-slate-400 italic">No communication history logged inside this terminal session.</p>
+                    </div>
+                  ) : (
+                    filteredMessages.map(msg => {
+                      const isMe = msg.senderId === currentUser?.id;
+                      const decryptedText = decryptData(msg.content, 'SCHOOL_SECRET_KEY');
+                      
+                      return (
+                        <div key={msg.id} className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}>
+                          <div className={`p-3 rounded-lg text-xs max-w-sm ${
+                            isMe 
+                              ? 'bg-blue-600 text-white rounded-br-none' 
+                              : 'bg-white border border-slate-200 text-slate-700 rounded-bl-none shadow-xs'
+                          }`}>
+                            <div className="flex items-center gap-1 opacity-75 text-[9px] mb-1 font-mono justify-between">
+                              <span>{isMe ? 'You' : msg.senderName} • {new Date(msg.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                              <span className="flex items-center gap-0.5 font-sans"><Lock className="w-2.5 h-2.5" /> Private</span>
+                            </div>
+                            <p className="leading-relaxed">{decryptedText}</p>
+                          </div>
+                        </div>
+                      );
+                    })
+                  )}
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
                 </div>
               </div>
 
@@ -1142,6 +1289,7 @@ export default function TeacherDashboard() {
                     <p className="text-[10px] text-slate-400">Head to Admin login to enroll/register students to this class grade.</p>
                   </div>
                 ) : (
+<<<<<<< HEAD
                   // Added overflow-x-auto and min-w
                   <div className="border border-slate-100 rounded-xl overflow-x-auto">
                     <div className="divide-y divide-slate-100 min-w-[700px]">
@@ -1244,6 +1392,107 @@ export default function TeacherDashboard() {
                         );
                       })}
                     </div>
+=======
+                  <div className="border border-slate-100 rounded-xl overflow-hidden divide-y divide-slate-100">
+                    {activeClassStudents.map((st) => {
+                      const currentStatus = attRecords[st.id]?.status || 'PRESENT';
+                      const currentRemarks = attRecords[st.id]?.remarks || '';
+
+                      return (
+                        <div key={st.id} className="p-4 bg-slate-50/15 hover:bg-slate-50/40 transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4">
+                          <div className="min-w-0">
+                            <p className="font-bold text-sm text-slate-800 tracking-tight">{st.name}</p>
+                            <p className="text-[10px] text-slate-400 font-mono mt-0.5">ID: {st.studentIdCardNum} • seat: {st.seatNumber || 'Unassigned'}</p>
+                          </div>
+
+                          {/* Interactive Roster Selection Capsules */}
+                          <div className="flex flex-wrap items-center gap-2">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setAttRecords(prev => ({
+                                  ...prev,
+                                  [st.id]: { ...(prev[st.id] || { remarks: '' }), status: 'PRESENT' }
+                                }));
+                              }}
+                              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all border ${
+                                currentStatus === 'PRESENT'
+                                  ? 'bg-emerald-600 border-emerald-600 text-white shadow-xs'
+                                  : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                              } cursor-pointer`}
+                            >
+                              Present
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setAttRecords(prev => ({
+                                  ...prev,
+                                  [st.id]: { ...(prev[st.id] || { remarks: '' }), status: 'ABSENT' }
+                                }));
+                              }}
+                              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all border ${
+                                currentStatus === 'ABSENT'
+                                  ? 'bg-rose-600 border-rose-600 text-white shadow-xs'
+                                  : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                              } cursor-pointer`}
+                            >
+                              Absent
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setAttRecords(prev => ({
+                                  ...prev,
+                                  [st.id]: { ...(prev[st.id] || { remarks: '' }), status: 'LATE' }
+                                }));
+                              }}
+                              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all border ${
+                                currentStatus === 'LATE'
+                                  ? 'bg-amber-500 border-amber-500 text-white shadow-xs'
+                                  : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                              } cursor-pointer`}
+                            >
+                              Late
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setAttRecords(prev => ({
+                                  ...prev,
+                                  [st.id]: { ...(prev[st.id] || { remarks: '' }), status: 'EXCUSED' }
+                                }));
+                              }}
+                              className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all border ${
+                                currentStatus === 'EXCUSED'
+                                  ? 'bg-slate-500 border-slate-500 text-white shadow-xs'
+                                  : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'
+                              } cursor-pointer`}
+                            >
+                              Excused
+                            </button>
+
+                            {/* Remarks input inline */}
+                            <input
+                              type="text"
+                              placeholder="Add remarks..."
+                              value={currentRemarks}
+                              onChange={(e) => {
+                                setAttRecords(prev => ({
+                                  ...prev,
+                                  [st.id]: { ...(prev[st.id] || { status: 'PRESENT' }), remarks: e.target.value }
+                                }));
+                              }}
+                              className="text-[11px] p-1.5 border border-slate-200 rounded-md focus:outline-blue-500 w-32 md:w-40 ml-1 font-sans bg-white"
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
                   </div>
                 )}
               </div>
@@ -1315,13 +1564,21 @@ export default function TeacherDashboard() {
                 </div>
 
                 {/* Chronicled Table */}
+<<<<<<< HEAD
                 {/* Added overflow-x-auto and min-w */}
                 <div className="border border-slate-100 rounded-xl p-4 bg-slate-50/10 space-y-2 max-h-[290px] overflow-y-auto overflow-x-auto">
+=======
+                <div className="border border-slate-100 rounded-xl p-4 bg-slate-50/10 space-y-2 max-h-[290px] overflow-y-auto">
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
                   <h4 className="text-xs font-bold text-slate-600 uppercase tracking-wide font-mono pb-1 border-b border-slate-100">Live Turnout Chronicle</h4>
                   {attendance.length === 0 ? (
                     <p className="text-xs text-slate-400 italic font-mono pt-4 text-center">No logs generated.</p>
                   ) : (
+<<<<<<< HEAD
                     <div className="divide-y divide-slate-100 min-w-[500px]">
+=======
+                    <div className="divide-y divide-slate-100">
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
                       {[...attendance].reverse().slice(0, 15).map(log => (
                         <div key={log.id} className="py-2 flex items-center justify-between text-[11px] font-sans">
                           <div>
@@ -1397,5 +1654,11 @@ export default function TeacherDashboard() {
 
       </motion.div>
     </div>
+<<<<<<< HEAD
   );
 }
+=======
+    </>
+  );
+}
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e

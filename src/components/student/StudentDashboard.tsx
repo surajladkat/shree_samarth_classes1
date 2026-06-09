@@ -91,14 +91,49 @@ export default function StudentDashboard() {
   };
 
   return (
+<<<<<<< HEAD
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 p-1">
       
       {/* Student Profile Overview */}
+=======
+    <>
+    {/* Mobile Tab Bar — visible only below lg */}
+    <div className="lg:hidden flex items-center gap-1.5 overflow-x-auto pb-1 -mx-1 px-1">
+      {[
+        { key: 'assignments-desk',  icon: <Calendar className="w-4 h-4" />,     label: 'Assignments' },
+        { key: 'study-folder',      icon: <BookOpen className="w-4 h-4" />,      label: 'Library'     },
+        { key: 'grades',            icon: <Award className="w-4 h-4" />,         label: 'Grades'      },
+        { key: 'timetable',         icon: <Calendar className="w-4 h-4" />,      label: 'Timetable'  },
+        { key: 'attendance',        icon: <CheckCircle2 className="w-4 h-4" />,  label: 'Attendance'  },
+        { key: 'faculty-directory', icon: <Users className="w-4 h-4" />,         label: 'Faculty'     },
+      ].map(({ key, icon, label }) => (
+        <button
+          key={key}
+          onClick={() => setActiveTab(key as typeof activeTab)}
+          className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
+            activeTab === key
+              ? 'bg-indigo-600 text-white shadow-sm'
+              : 'bg-white text-slate-600 border border-slate-200'
+          }`}
+        >
+          {icon}{label}
+        </button>
+      ))}
+    </div>
+
+    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 p-1">
+      
+      {/* Student Profile Overview — hidden on mobile */}
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
       <motion.div 
         initial={{ opacity: 0, x: -30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6 }}
+<<<<<<< HEAD
         className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.05)] col-span-1 h-fit space-y-4 font-sans"
+=======
+        className="hidden lg:flex lg:flex-col bg-white rounded-2xl border border-slate-200/80 p-5 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.05)] col-span-1 h-fit space-y-4 font-sans"
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
       >
         <div className="border-b border-slate-100 pb-4 relative">
           <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500 via-indigo-500 to-indigo-600 text-white flex items-center justify-center font-black text-lg mb-3 shadow-md shadow-indigo-200">
@@ -263,7 +298,11 @@ export default function StudentDashboard() {
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: "easeOut" }}
+<<<<<<< HEAD
         className="lg:col-span-3 space-y-6"
+=======
+        className="col-span-1 lg:col-span-3 space-y-6"
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
       >
 
         {/* Warning Badge / Notification Banner for Pending Fees */}
@@ -311,6 +350,7 @@ export default function StudentDashboard() {
                 {myClassAssignments.length === 0 ? (
                   <p className="text-xs italic text-slate-400 py-6 text-center font-sans">No assignments posted for Class {student?.classGrade} yet.</p>
                 ) : (
+<<<<<<< HEAD
                   // Added overflow-x-auto and min-w here
                   <div className="max-h-[500px] overflow-y-auto overflow-x-auto pr-1">
                     <div className="min-w-[600px] space-y-4">
@@ -371,6 +411,65 @@ export default function StudentDashboard() {
                         );
                       })}
                     </div>
+=======
+                  <div className="space-y-4 max-h-[500px] overflow-y-auto pr-1">
+                    {myClassAssignments.map(asg => {
+                      const submission = getSubmissionByAsg(asg.id);
+                      const isExpired = new Date(asg.dueDate).getTime() < new Date().getTime();
+
+                      return (
+                        <div key={asg.id} className="border border-slate-200 rounded-lg p-4 bg-slate-50/50 space-y-3.5 hover:border-blue-200 transition-colors">
+                          <div className="flex flex-col sm:flex-row justify-between items-start gap-2 border-b border-slate-100 pb-2.5">
+                            <div>
+                              <span className="px-2 py-0.5 bg-slate-100 text-[10px] text-slate-500 font-semibold rounded uppercase mr-2 tracking-wide font-mono">
+                                {asg.subject}
+                              </span>
+                              <span className="text-xs font-bold text-slate-800 font-sans">{asg.title}</span>
+                              <p className="text-[10px] text-slate-400 mt-1 font-mono">Posted by {asg.teacherName} • Due {new Date(asg.dueDate).toLocaleString()}</p>
+                            </div>
+
+                            {submission ? (
+                              <span className={`px-2 py-0.5 rounded text-[10px] font-bold flex items-center gap-1 font-mono ${
+                                submission.status === 'GRADED' 
+                                  ? 'bg-emerald-50 text-emerald-700 border border-emerald-100' 
+                                  : 'bg-blue-50 text-blue-700 border border-blue-100'
+                              }`}>
+                                <CheckCircle2 className="w-3.5 h-3.5" />
+                                {submission.status === 'GRADED' ? `Grade: ${submission.grade}` : 'Submitted (Secure)'}
+                              </span>
+                            ) : (
+                              <span className="px-2 py-0.5 bg-slate-100 text-slate-500 rounded text-[10px] font-semibold border border-slate-200 font-mono">
+                                Pending Completion
+                              </span>
+                            )}
+                          </div>
+
+                          <p className="text-xs text-slate-605 text-slate-650 leading-relaxed font-normal font-sans">
+                            {asg.description}
+                          </p>
+
+                          {submission && submission.feedback && (
+                            <div className="bg-blue-50/40 p-2.5 rounded-lg border border-blue-100 text-[11px] leading-relaxed">
+                              <span className="font-bold text-blue-800 font-mono">Teacher feedback evaluation remarks:</span>
+                              <p className="text-slate-600 italic mt-0.5 font-sans">"{submission.feedback}"</p>
+                            </div>
+                          )}
+
+                          {!submission && (
+                            <button
+                              onClick={() => {
+                                setActiveSubmitAsgId(asg.id);
+                                setSubmissionBoxText('');
+                              }}
+                              className="px-4 py-2 bg-blue-600 text-white rounded-lg text-xs font-semibold hover:bg-blue-700 transition cursor-pointer font-sans"
+                            >
+                              Write Homework Answer Sheet
+                            </button>
+                          )}
+                        </div>
+                      );
+                    })}
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
                   </div>
                 )}
               </div>
@@ -576,9 +675,13 @@ export default function StudentDashboard() {
               </div>
             )}
           </div>
+<<<<<<< HEAD
         )}        
 
         {activeTab === 'grades' && (
+=======
+        )}        {activeTab === 'grades' && (
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
           <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm space-y-6">
             <div>
               <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2 font-sans">
@@ -614,9 +717,14 @@ export default function StudentDashboard() {
             <div className="space-y-4">
               <h3 className="text-xs font-bold text-slate-705 text-slate-700 uppercase tracking-wide font-mono">Tasks Evaluation Log</h3>
               
+<<<<<<< HEAD
               {/* Added overflow-x-auto and min-w here */}
               <div className="border border-slate-200 rounded-xl overflow-x-auto font-sans">
                 <table className="w-full min-w-[700px] text-xs text-left text-slate-500">
+=======
+              <div className="border border-slate-200 rounded-xl overflow-hidden font-sans">
+                <table className="w-full text-xs text-left text-slate-500">
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
                   <thead className="bg-slate-55 bg-slate-50 border-b border-slate-205 border-slate-200 text-[10px] text-slate-400 font-extrabold uppercase font-mono">
                     <tr>
                       <th className="py-3 px-4">Subject</th>
@@ -795,6 +903,7 @@ export default function StudentDashboard() {
                       <p className="text-[10px] text-slate-400">Class faculty roll calls will reflect here as they get submitted.</p>
                     </div>
                   ) : (
+<<<<<<< HEAD
                     // Added overflow-x-auto and min-w here
                     <div className="border border-slate-200 rounded-xl overflow-x-auto">
                       <div className="min-w-[600px] divide-y divide-slate-150">
@@ -831,6 +940,41 @@ export default function StudentDashboard() {
                           </div>
                         ))}
                       </div>
+=======
+                    <div className="border border-slate-200 rounded-xl overflow-hidden divide-y divide-slate-150">
+                      {[...myRecords].reverse().map((rec) => (
+                        <div key={rec.id} className="p-4 bg-slate-50/15 hover:bg-slate-50/40 transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+                          <div className="min-w-0">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <span className="font-bold text-slate-800 text-sm">{rec.subject} Class</span>
+                              <span className="text-[9px] bg-slate-100 border border-slate-200 text-slate-600 px-1.5 py-0.5 rounded font-mono">
+                                Date: {rec.date}
+                              </span>
+                            </div>
+                            <p className="text-[11px] text-slate-500 mt-1">
+                              Marked by: <strong>{rec.teacherName}</strong>
+                            </p>
+                            {rec.remarks && (
+                              <p className="text-[10px] text-slate-400 italic mt-0.5 bg-slate-100/50 py-0.5 px-2 rounded w-fit">
+                                Remarks: "{rec.remarks}"
+                              </p>
+                            )}
+                          </div>
+
+                          <span className={`px-3 py-1 rounded-full font-black text-[10px] tracking-wide font-mono text-center sm:text-right w-fit ${
+                            rec.status === 'PRESENT'
+                              ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                              : rec.status === 'ABSENT'
+                              ? 'bg-rose-100 text-rose-800 border border-rose-300'
+                              : rec.status === 'LATE'
+                              ? 'bg-amber-100 text-amber-805 text-amber-800 border border-amber-300'
+                              : 'bg-slate-100 text-slate-700 border border-slate-300'
+                          }`}>
+                            {rec.status}
+                          </span>
+                        </div>
+                      ))}
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
                     </div>
                   )}
                 </div>
@@ -847,5 +991,11 @@ export default function StudentDashboard() {
       </motion.div>
 
     </div>
+<<<<<<< HEAD
   );
 }
+=======
+    </>
+  );
+}
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e

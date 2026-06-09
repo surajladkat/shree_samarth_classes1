@@ -122,12 +122,20 @@ export default function AdminDashboard() {
   // Logging states
   const [logSearch, setLogSearch] = useState('');
 
+<<<<<<< HEAD
   // ✅ FIX: Added async/await here so the promise resolves and returns the generated IDs!
   const handleStudentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!studentName.trim() || !parentName.trim() || !parentPhone.trim()) return;
 
     const result = await registerStudentWithParent({
+=======
+  const handleStudentSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!studentName.trim() || !parentName.trim() || !parentPhone.trim()) return;
+
+    const result = registerStudentWithParent({
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
       studentName: studentName.trim(),
       classGrade,
       parentName: parentName.trim(),
@@ -135,8 +143,13 @@ export default function AdminDashboard() {
       parentPhone: parentPhone.trim(),
       totalFee: Number(customTotalFee) || 15000,
       paidFee: Number(initialPaid) || 0,
+<<<<<<< HEAD
       seatNumber: classGrade === 'Library' ? seatNumber.trim() : '',
       benchNumber: classGrade === 'Library' ? benchNumber.trim() : ''
+=======
+      seatNumber: classGrade === 'Library' ? seatNumber.trim() : undefined,
+      benchNumber: classGrade === 'Library' ? benchNumber.trim() : undefined
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
     });
 
     setCredentials({
@@ -158,12 +171,20 @@ export default function AdminDashboard() {
     setBenchNumber('');
   };
 
+<<<<<<< HEAD
   // ✅ FIX: Added async/await here as well for Teachers
   const handleTeacherSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!teacherNameInput.trim() || !teacherSubject.trim()) return;
 
     const result = await registerTeacher({
+=======
+  const handleTeacherSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!teacherNameInput.trim() || !teacherSubject.trim()) return;
+
+    const result = registerTeacher({
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
       name: teacherNameInput.trim(),
       subjects: [teacherSubject.trim()],
       classes: teacherGrades
@@ -212,13 +233,46 @@ export default function AdminDashboard() {
   const totalOutstanding = students.reduce((acc, s) => acc + (s.pendingFee || 0), 0);
 
   return (
+<<<<<<< HEAD
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 p-1 font-sans">
       {/* Sidebar Navigation */}
+=======
+    <>
+    {/* Mobile Tab Bar — visible only below lg */}
+    <div className="lg:hidden flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none -mx-1 px-1">
+      {[
+        { key: 'analytics',  icon: <BarChart2 className="w-4 h-4" />,  label: 'Analytics',   color: 'indigo'  },
+        { key: 'onboarding', icon: <UserPlus className="w-4 h-4" />,   label: 'Admissions',  color: 'emerald' },
+        { key: 'fees',       icon: <DollarSign className="w-4 h-4" />, label: 'Fees',        color: 'amber'   },
+        { key: 'logs',       icon: <Activity className="w-4 h-4" />,   label: `Logs`,        color: 'rose'    },
+        { key: 'timetable',  icon: <Calendar className="w-4 h-4" />,   label: 'Timetable',   color: 'sky'     },
+      ].map(({ key, icon, label }) => (
+        <button
+          key={key}
+          onClick={() => setActiveTab(key as typeof activeTab)}
+          className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
+            activeTab === key
+              ? 'bg-indigo-600 text-white shadow-sm'
+              : 'bg-white text-slate-600 border border-slate-200'
+          }`}
+        >
+          {icon}{label}
+        </button>
+      ))}
+    </div>
+
+    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 p-1 font-sans">
+      {/* Sidebar Navigation — hidden on mobile */}
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
       <motion.div 
         initial={{ opacity: 0, x: -30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6 }}
+<<<<<<< HEAD
         className="bg-white rounded-2xl border border-slate-200 p-5 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.05)] col-span-1 h-fit space-y-2"
+=======
+        className="hidden lg:block bg-white rounded-2xl border border-slate-200 p-5 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.05)] col-span-1 h-fit space-y-2"
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
       >
         <div className="px-3 py-2 mb-4 border-b border-slate-100 pb-4">
           <div className="flex items-center gap-2 text-slate-800 font-bold text-xs tracking-wider uppercase font-mono">
@@ -305,7 +359,11 @@ export default function AdminDashboard() {
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: "easeOut" }}
+<<<<<<< HEAD
         className="lg:col-span-3 space-y-6 text-left"
+=======
+        className="col-span-1 lg:col-span-3 space-y-6 text-left"
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
       >
         
         {/* Dynamic Totals Dashboard Metrics */}
@@ -482,10 +540,17 @@ export default function AdminDashboard() {
               </div>
             </div>
 
+<<<<<<< HEAD
             {/* Generated Credentials Output Panel - ✅ FIX: Perfect Alignment & Horizontal Scroll */}
             {credentials && (
               <div className="bg-blue-50/45 border border-blue-200 rounded-xl p-5 space-y-4 font-normal overflow-x-auto">
                 <div className="flex items-center justify-between min-w-[500px]">
+=======
+            {/* Generated Credentials Output Panel */}
+            {credentials && (
+              <div className="bg-blue-50/45 border border-blue-200 rounded-xl p-5 space-y-4 font-normal">
+                <div className="flex items-center justify-between">
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
                   <h3 className="text-xs font-bold text-blue-900 flex items-center gap-1.5 font-mono">
                     <CheckCircle2 className="w-4 h-4 text-blue-600" /> Official Login ID Generated Successfully
                   </h3>
@@ -498,7 +563,11 @@ export default function AdminDashboard() {
                 </div>
 
                 {credentials.type === 'student' ? (
+<<<<<<< HEAD
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 min-w-[500px]">
+=======
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
                     {/* Student details card */}
                     <div className="bg-white p-4 rounded-lg border border-blue-100 space-y-3 text-xs">
                       <p className="font-extrabold text-slate-800 flex items-center gap-1.5">
@@ -557,7 +626,11 @@ export default function AdminDashboard() {
                   </div>
                 ) : (
                   // Teacher details card
+<<<<<<< HEAD
                   <div className="bg-white p-5 rounded-lg border border-blue-100 space-y-3.5 text-xs min-w-[500px]">
+=======
+                  <div className="bg-white p-5 rounded-lg border border-blue-100 space-y-3.5 text-xs max-w-xl">
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
                     <p className="font-extrabold text-slate-800 flex items-center gap-1.5">
                       <span className="px-1.5 py-0.5 bg-emerald-50 text-emerald-805 text-emerald-700 rounded text-[9px] font-mono font-bold">TEACHING FACULTY</span>
                       {credentials.teacherName}
@@ -592,7 +665,11 @@ export default function AdminDashboard() {
                     </div>
                   </div>
                 )}
+<<<<<<< HEAD
                 <div className="text-[10px] italic text-slate-400 font-sans border-t border-blue-100 pt-2.5 min-w-[500px]">
+=======
+                <div className="text-[10px] italic text-slate-400 font-sans border-t border-blue-100 pt-2.5">
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
                   🛡️ Give these credentials to the staff or parent. They can log in immediately from the home screen using this specific ID.
                 </div>
               </div>
@@ -871,8 +948,14 @@ export default function AdminDashboard() {
             </div>
 
             {/* Student Ledger List */}
+<<<<<<< HEAD
             <div className="border border-slate-200 rounded-xl overflow-x-auto shadow-2xs">
               <table className="w-full min-w-[800px] text-left border-collapse text-xs text-slate-500">
+=======
+            <div className="border border-slate-200 rounded-xl overflow-hidden shadow-2xs">
+              <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse text-xs text-slate-500 min-w-[640px]">
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
                 <thead className="bg-slate-50 border-b border-slate-200 text-[10px] uppercase font-mono text-slate-400 font-bold">
                   <tr>
                     <th className="py-3 px-4">Student</th>
@@ -967,6 +1050,10 @@ export default function AdminDashboard() {
                     })}
                 </tbody>
               </table>
+<<<<<<< HEAD
+=======
+              </div>
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
             </div>
           </div>
         )}
@@ -992,8 +1079,15 @@ export default function AdminDashboard() {
               />
             </div>
 
+<<<<<<< HEAD
             <div className="border border-slate-200 rounded-xl overflow-x-auto">
               <table className="w-full min-w-[600px] text-xs text-left text-slate-500 border-collapse">
+=======
+            {/* Table layout */}
+            <div className="border border-slate-200 rounded-xl overflow-hidden">
+              <div className="overflow-x-auto">
+              <table className="w-full text-xs text-left text-slate-500 border-collapse min-w-[560px]">
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
                 <thead className="text-[10px] text-slate-400 uppercase bg-slate-50 border-b border-slate-200 font-mono font-bold">
                   <tr>
                     <th className="py-3 px-4">Time</th>
@@ -1038,6 +1132,10 @@ export default function AdminDashboard() {
                     ))}
                 </tbody>
               </table>
+<<<<<<< HEAD
+=======
+              </div>
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
             </div>
           </div>
         )}
@@ -1054,6 +1152,10 @@ export default function AdminDashboard() {
             </div>
 
             <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+<<<<<<< HEAD
+=======
+              {/* Creator Form */}
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
               <div className="border border-slate-200 p-5 rounded-2xl bg-slate-50/50 space-y-4">
                 <h3 className="text-xs font-bold text-slate-700 uppercase tracking-widest font-mono">Create Schedule Slot</h3>
                 
@@ -1157,6 +1259,10 @@ export default function AdminDashboard() {
                 </form>
               </div>
 
+<<<<<<< HEAD
+=======
+              {/* Schedules View */}
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
               <div className="xl:col-span-2 space-y-4">
                 <div className="bg-slate-50 p-2 border border-slate-200 rounded-xl flex items-center justify-between">
                   <span className="text-xs text-slate-500 font-bold ml-2 font-mono">Select Active Class Division for Filter:</span>
@@ -1250,8 +1356,13 @@ export default function AdminDashboard() {
             </div>
 
             <div className="p-5 overflow-y-auto flex-1 bg-white">
+<<<<<<< HEAD
               <div className="border border-slate-200 rounded-xl overflow-x-auto">
                 <table className="w-full min-w-[1000px] text-xs text-left text-slate-500 border-collapse">
+=======
+              <div className="border border-slate-200 rounded-xl overflow-hidden">
+                <table className="w-full text-xs text-left text-slate-500 border-collapse">
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
                   <thead className="text-[10px] text-slate-400 uppercase bg-slate-50 border-b border-slate-200 font-mono font-bold">
                     <tr>
                       <th className="py-2.5 px-3">Student Details</th>
@@ -1391,8 +1502,13 @@ export default function AdminDashboard() {
             </div>
 
             <div className="p-5 overflow-y-auto flex-1 bg-white">
+<<<<<<< HEAD
               <div className="border border-slate-200 rounded-xl overflow-x-auto">
                 <table className="w-full min-w-[800px] text-xs text-left text-slate-500 border-collapse">
+=======
+              <div className="border border-slate-200 rounded-xl overflow-hidden">
+                <table className="w-full text-xs text-left text-slate-500 border-collapse">
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
                   <thead className="text-[10px] text-slate-400 uppercase bg-slate-50 border-b border-slate-200 font-mono font-bold">
                     <tr>
                       <th className="py-2.5 px-3">Faculty Name</th>
@@ -1477,5 +1593,11 @@ export default function AdminDashboard() {
         </div>
       )}
     </div>
+<<<<<<< HEAD
   );
 }
+=======
+    </>
+  );
+}
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e

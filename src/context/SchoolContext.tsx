@@ -328,8 +328,13 @@ export const SchoolProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       parentId: pId,
       studentIdCardNum: `STU-${data.classGrade.replace('th', '')}-2026-${Math.floor(100 + Math.random() * 900)}`,
       createdAt: new Date().toISOString(),
+<<<<<<< HEAD
       seatNumber: data.seatNumber || '',
       benchNumber: data.benchNumber || '',
+=======
+      seatNumber: data.seatNumber,
+      benchNumber: data.benchNumber,
+>>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
       totalFee: data.totalFee,
       paidFee: data.paidFee,
       pendingFee,
