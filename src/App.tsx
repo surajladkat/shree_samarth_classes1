@@ -27,11 +27,7 @@ function AppContent() {
   }
 
   return (
-<<<<<<< HEAD
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 py-6 px-4 md:px-8 space-y-6">
-=======
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900 py-4 md:py-6 px-3 sm:px-4 md:px-8 space-y-4 md:space-y-6">
->>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
       {currentUser && <Header />}
       <main className="mx-auto max-w-7xl">
         {!currentUser ? (

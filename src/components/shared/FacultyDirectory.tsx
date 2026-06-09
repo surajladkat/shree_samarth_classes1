@@ -76,43 +76,6 @@ export default function FacultyDirectory({ teachers }: FacultyDirectoryProps) {
           <p className="text-xs text-slate-400 italic">No faculty instructors matched the search criteria.</p>
         </div>
       ) : (
-<<<<<<< HEAD
-        // Added overflow-x-auto and min-w to force horizontal scroll on small screens
-        <div className="overflow-x-auto pr-1 pb-2">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 min-w-[600px]">
-            {filteredTeachers.map(t => {
-              const initials = t.name ? t.name.split(' ').map((n: string) => n[0]).join('').slice(0, 2).toUpperCase() : 'FC';
-              return (
-                <div 
-                  key={t.id} 
-                  className="border border-slate-200 rounded-xl p-4.5 bg-slate-50/30 hover:bg-white hover:border-blue-200 transition-all duration-150 flex items-start gap-4 shadow-sm"
-                >
-                  {/* Avatar with dynamic matching color */}
-                  <div className="w-11 h-11 rounded-full bg-blue-105 bg-blue-50 border border-blue-200 text-blue-700 font-extrabold text-[13px] flex items-center justify-center shrink-0">
-                    {initials}
-                  </div>
-
-                  <div className="space-y-2 flex-grow">
-                    <div>
-                      <h3 className="text-sm font-bold text-slate-800 leading-tight">{t.name}</h3>
-                      <span className="inline-block mt-0.5 px-2 py-0.2 bg-slate-50 text-[10px] text-slate-500 font-mono font-bold rounded border border-slate-200/50">
-                        Official Faculty Instructor
-                      </span>
-                    </div>
-
-                    {/* Subjects */}
-                    <div className="space-y-1">
-                      <p className="text-[10px] text-slate-400 uppercase font-mono font-bold flex items-center gap-1">
-                        <BookOpen className="w-3 h-3 text-blue-500" /> Assigned Subjects
-                      </p>
-                      <div className="flex flex-wrap gap-1.5 pt-0.5">
-                        {t.subjects && t.subjects.map((sub, idx) => (
-                          <span 
-                            key={idx} 
-                            className="px-2 py-0.5 bg-blue-50 text-blue-700 text-[10px] font-sans font-semibold rounded border border-blue-100/50"
-                          >
-                            {sub}
-=======
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {filteredTeachers.map(t => {
             const initials = t.name ? t.name.split(' ').map((n: string) => n[0]).join('').slice(0, 2).toUpperCase() : 'FC';
@@ -164,49 +127,17 @@ export default function FacultyDirectory({ teachers }: FacultyDirectoryProps) {
                             className="px-2 py-0.1 bg-purple-50 text-purple-700 text-[10px] font-sans font-semibold rounded border border-purple-100/50"
                           >
                             Class {cls}
->>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
                           </span>
                         ))}
                       </div>
                     </div>
-<<<<<<< HEAD
-
-                    {/* Classes */}
-                    {t.classes && t.classes.length > 0 && (
-                      <div className="space-y-1">
-                        <p className="text-[10px] text-slate-404 text-slate-400 uppercase font-mono font-bold flex items-center gap-1">
-                          <Layers className="w-3 h-3 text-purple-500" /> Teaching Batches
-                        </p>
-                        <div className="flex flex-wrap gap-1">
-                          {t.classes.map((cls, idx) => (
-                            <span 
-                              key={idx} 
-                              className="px-2 py-0.1 bg-purple-50 text-purple-700 text-[10px] font-sans font-semibold rounded border border-purple-100/50"
-                            >
-                              Class {cls}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-=======
                   )}
                 </div>
               </div>
             );
           })}
->>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
         </div>
       )}
     </div>
   );
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e

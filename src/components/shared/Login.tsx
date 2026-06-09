@@ -6,7 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSchool } from '../../context/SchoolContext';
 import { ShieldAlert, LogIn, Users, ShieldCheck, ChevronLeft, ChevronRight } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const SLIDER_IMAGES = [
   {
@@ -297,4 +297,4 @@ export default function Login() {
 
     </div>
   );
-}b1e
+}

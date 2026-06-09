@@ -122,20 +122,11 @@ export default function AdminDashboard() {
   // Logging states
   const [logSearch, setLogSearch] = useState('');
 
-<<<<<<< HEAD
-  // ✅ FIX: Added async/await here so the promise resolves and returns the generated IDs!
   const handleStudentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!studentName.trim() || !parentName.trim() || !parentPhone.trim()) return;
 
     const result = await registerStudentWithParent({
-=======
-  const handleStudentSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!studentName.trim() || !parentName.trim() || !parentPhone.trim()) return;
-
-    const result = registerStudentWithParent({
->>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
       studentName: studentName.trim(),
       classGrade,
       parentName: parentName.trim(),
@@ -143,13 +134,8 @@ export default function AdminDashboard() {
       parentPhone: parentPhone.trim(),
       totalFee: Number(customTotalFee) || 15000,
       paidFee: Number(initialPaid) || 0,
-<<<<<<< HEAD
       seatNumber: classGrade === 'Library' ? seatNumber.trim() : '',
       benchNumber: classGrade === 'Library' ? benchNumber.trim() : ''
-=======
-      seatNumber: classGrade === 'Library' ? seatNumber.trim() : undefined,
-      benchNumber: classGrade === 'Library' ? benchNumber.trim() : undefined
->>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
     });
 
     setCredentials({
@@ -171,20 +157,11 @@ export default function AdminDashboard() {
     setBenchNumber('');
   };
 
-<<<<<<< HEAD
-  // ✅ FIX: Added async/await here as well for Teachers
   const handleTeacherSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!teacherNameInput.trim() || !teacherSubject.trim()) return;
 
     const result = await registerTeacher({
-=======
-  const handleTeacherSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!teacherNameInput.trim() || !teacherSubject.trim()) return;
-
-    const result = registerTeacher({
->>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
       name: teacherNameInput.trim(),
       subjects: [teacherSubject.trim()],
       classes: teacherGrades
@@ -227,52 +204,18 @@ export default function AdminDashboard() {
     navigator.clipboard.writeText(text);
   };
 
-  // Finance analytics parameters
   const totalProjected = students.reduce((acc, s) => acc + (s.totalFee || 0), 0);
   const totalCollections = students.reduce((acc, s) => acc + (s.paidFee || 0), 0);
   const totalOutstanding = students.reduce((acc, s) => acc + (s.pendingFee || 0), 0);
 
   return (
-<<<<<<< HEAD
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 p-1 font-sans">
       {/* Sidebar Navigation */}
-=======
-    <>
-    {/* Mobile Tab Bar — visible only below lg */}
-    <div className="lg:hidden flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none -mx-1 px-1">
-      {[
-        { key: 'analytics',  icon: <BarChart2 className="w-4 h-4" />,  label: 'Analytics',   color: 'indigo'  },
-        { key: 'onboarding', icon: <UserPlus className="w-4 h-4" />,   label: 'Admissions',  color: 'emerald' },
-        { key: 'fees',       icon: <DollarSign className="w-4 h-4" />, label: 'Fees',        color: 'amber'   },
-        { key: 'logs',       icon: <Activity className="w-4 h-4" />,   label: `Logs`,        color: 'rose'    },
-        { key: 'timetable',  icon: <Calendar className="w-4 h-4" />,   label: 'Timetable',   color: 'sky'     },
-      ].map(({ key, icon, label }) => (
-        <button
-          key={key}
-          onClick={() => setActiveTab(key as typeof activeTab)}
-          className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
-            activeTab === key
-              ? 'bg-indigo-600 text-white shadow-sm'
-              : 'bg-white text-slate-600 border border-slate-200'
-          }`}
-        >
-          {icon}{label}
-        </button>
-      ))}
-    </div>
-
-    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 p-1 font-sans">
-      {/* Sidebar Navigation — hidden on mobile */}
->>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
       <motion.div 
         initial={{ opacity: 0, x: -30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6 }}
-<<<<<<< HEAD
         className="bg-white rounded-2xl border border-slate-200 p-5 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.05)] col-span-1 h-fit space-y-2"
-=======
-        className="hidden lg:block bg-white rounded-2xl border border-slate-200 p-5 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.05)] col-span-1 h-fit space-y-2"
->>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
       >
         <div className="px-3 py-2 mb-4 border-b border-slate-100 pb-4">
           <div className="flex items-center gap-2 text-slate-800 font-bold text-xs tracking-wider uppercase font-mono">
@@ -359,11 +302,7 @@ export default function AdminDashboard() {
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: "easeOut" }}
-<<<<<<< HEAD
         className="lg:col-span-3 space-y-6 text-left"
-=======
-        className="col-span-1 lg:col-span-3 space-y-6 text-left"
->>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
       >
         
         {/* Dynamic Totals Dashboard Metrics */}
@@ -423,7 +362,6 @@ export default function AdminDashboard() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-4">
-              {/* Classroom population bar list */}
               <div className="border border-slate-200 p-4 rounded-xl space-y-3.5">
                 <p className="text-xs font-bold text-slate-700 uppercase tracking-wider font-mono flex items-center gap-1.5">
                   <GraduationCap className="w-4 h-4 text-blue-600" /> Student Distribution
@@ -447,7 +385,6 @@ export default function AdminDashboard() {
                 </div>
               </div>
 
-              {/* Outstanding vs Collected bento */}
               <div className="border border-slate-200 p-4 rounded-xl space-y-3.5 flex flex-col justify-between">
                 <div>
                   <p className="text-xs font-bold text-slate-700 uppercase tracking-wider font-mono flex items-center gap-1.5">
@@ -459,7 +396,6 @@ export default function AdminDashboard() {
                   </p>
                 </div>
                 
-                {/* SVG Visual Progress Bar */}
                 <div className="space-y-2 pt-4">
                   <div className="flex justify-between items-baseline text-xs">
                     <span className="text-xs text-slate-400 font-medium">Payment Performance Indicator</span>
@@ -487,7 +423,6 @@ export default function AdminDashboard() {
               </div>
             </div>
 
-            {/* Academy Directories */}
             <div className="space-y-3">
               <h3 className="text-xs font-bold text-slate-700 uppercase tracking-wide font-mono">Teachers & Active Subjects</h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 text-xs text-slate-600">
@@ -510,8 +445,6 @@ export default function AdminDashboard() {
         {/* 2. ONBOARDING & ENROLLMENT PORTAL */}
         {activeTab === 'onboarding' && (
           <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-xs space-y-6">
-            
-            {/* Header and Pill Toggle for student vs teacher */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-4">
               <div>
                 <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
@@ -521,7 +454,6 @@ export default function AdminDashboard() {
                 <p className="text-xs text-slate-400 mt-1">Enroll regular students (generates paired parent details) or register teaching staff.</p>
               </div>
 
-              {/* Inline Pills */}
               <div className="flex bg-slate-100 p-1 rounded-lg w-fit text-xs font-semibold">
                 <button
                   type="button"
@@ -540,17 +472,9 @@ export default function AdminDashboard() {
               </div>
             </div>
 
-<<<<<<< HEAD
-            {/* Generated Credentials Output Panel - ✅ FIX: Perfect Alignment & Horizontal Scroll */}
             {credentials && (
               <div className="bg-blue-50/45 border border-blue-200 rounded-xl p-5 space-y-4 font-normal overflow-x-auto">
-                <div className="flex items-center justify-between min-w-[500px]">
-=======
-            {/* Generated Credentials Output Panel */}
-            {credentials && (
-              <div className="bg-blue-50/45 border border-blue-200 rounded-xl p-5 space-y-4 font-normal">
-                <div className="flex items-center justify-between">
->>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
+                <div className="flex items-center justify-between min-w-[600px]">
                   <h3 className="text-xs font-bold text-blue-900 flex items-center gap-1.5 font-mono">
                     <CheckCircle2 className="w-4 h-4 text-blue-600" /> Official Login ID Generated Successfully
                   </h3>
@@ -563,22 +487,13 @@ export default function AdminDashboard() {
                 </div>
 
                 {credentials.type === 'student' ? (
-<<<<<<< HEAD
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 min-w-[500px]">
-=======
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
->>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
-                    {/* Student details card */}
+                  <div className="grid grid-cols-2 gap-4 min-w-[600px]">
                     <div className="bg-white p-4 rounded-lg border border-blue-100 space-y-3 text-xs">
                       <p className="font-extrabold text-slate-800 flex items-center gap-1.5">
                         <span className="px-1.5 py-0.5 bg-blue-50 text-blue-700 rounded text-[9px] font-mono font-bold">STUDENT</span>
                         {credentials.studentName}
                       </p>
                       <div className="border-t border-slate-50 pt-2 space-y-1.5">
-                        <div className="flex justify-between">
-                          <span className="text-slate-400">Assigned Folder</span>
-                          <span className="font-bold text-slate-700">{classGrade} Grade</span>
-                        </div>
                         <div className="flex justify-between items-center bg-slate-50 p-2 rounded">
                           <span className="text-slate-500 font-semibold">Login ID (Username)</span>
                           <span className="font-mono bg-white px-2 py-0.5 rounded text-[11px] text-blue-900 border border-slate-200 font-bold flex items-center gap-2">
@@ -596,17 +511,12 @@ export default function AdminDashboard() {
                       </div>
                     </div>
 
-                    {/* Parent details card */}
                     <div className="bg-white p-4 rounded-lg border border-blue-100 space-y-3 text-xs">
                       <p className="font-extrabold text-slate-800 flex items-center gap-1.5">
                         <span className="px-1.5 py-0.5 bg-amber-50 text-amber-700 rounded text-[9px] font-mono font-bold">PARENT</span>
                         {credentials.parentName}
                       </p>
                       <div className="border-t border-slate-50 pt-2 space-y-1.5">
-                        <div className="flex justify-between">
-                          <span className="text-slate-400">Relation</span>
-                          <span className="font-bold text-slate-700">{relationship}</span>
-                        </div>
                         <div className="flex justify-between items-center bg-slate-50 p-2 rounded">
                           <span className="text-slate-500 font-semibold">Login ID (Username)</span>
                           <span className="font-mono bg-white px-2 py-0.5 rounded text-[11px] text-amber-900 border border-slate-200 font-bold flex items-center gap-2">
@@ -625,27 +535,17 @@ export default function AdminDashboard() {
                     </div>
                   </div>
                 ) : (
-                  // Teacher details card
-<<<<<<< HEAD
                   <div className="bg-white p-5 rounded-lg border border-blue-100 space-y-3.5 text-xs min-w-[500px]">
-=======
-                  <div className="bg-white p-5 rounded-lg border border-blue-100 space-y-3.5 text-xs max-w-xl">
->>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
                     <p className="font-extrabold text-slate-800 flex items-center gap-1.5">
                       <span className="px-1.5 py-0.5 bg-emerald-50 text-emerald-805 text-emerald-700 rounded text-[9px] font-mono font-bold">TEACHING FACULTY</span>
                       {credentials.teacherName}
                     </p>
                     <div className="border-t border-slate-50 pt-2.5 space-y-2">
-                      <div className="flex justify-between text-xs">
-                        <span className="text-slate-400 font-sans">Primary Subject</span>
-                        <span className="font-bold text-slate-700">{credentials.subject}</span>
-                      </div>
                       <div className="flex justify-between text-xs border-b border-slate-50 pb-2">
-                        <span className="text-slate-400 font-sans">Classes assigned folder</span>
-                        <span className="font-bold text-slate-700">{teacherGrades.join(', ')}</span>
+                        <span className="text-slate-400 font-sans">Classes & Subjects</span>
+                        <span className="font-bold text-slate-700">{teacherGrades.join(', ')} | {credentials.subject}</span>
                       </div>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                      <div className="grid grid-cols-2 gap-3 pt-1">
                         <div className="bg-slate-50 p-2.5 rounded">
                           <span className="text-[10px] text-slate-400 font-semibold uppercase block mb-1">Generated ID Username</span>
                           <div className="flex items-center justify-between">
@@ -654,7 +554,7 @@ export default function AdminDashboard() {
                           </div>
                         </div>
 
-                        <div className="bg-slate-50 p-2.5 rounded">
+                        <div className="bg-slate-50/50 p-2.5 rounded">
                           <span className="text-[10px] text-slate-400 font-semibold uppercase block mb-1">Generated Default Password</span>
                           <div className="flex items-center justify-between">
                             <span className="font-mono text-xs text-blue-900 font-bold">{credentials.tPass}</span>
@@ -665,11 +565,7 @@ export default function AdminDashboard() {
                     </div>
                   </div>
                 )}
-<<<<<<< HEAD
                 <div className="text-[10px] italic text-slate-400 font-sans border-t border-blue-100 pt-2.5 min-w-[500px]">
-=======
-                <div className="text-[10px] italic text-slate-400 font-sans border-t border-blue-100 pt-2.5">
->>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
                   🛡️ Give these credentials to the staff or parent. They can log in immediately from the home screen using this specific ID.
                 </div>
               </div>
@@ -679,7 +575,6 @@ export default function AdminDashboard() {
             {onboardRole === 'student' && !credentials && (
               <form onSubmit={handleStudentSubmit} className="space-y-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* Left part: Student values */}
                   <div className="border border-slate-200 p-4 rounded-xl space-y-3.5 bg-slate-50/20">
                     <p className="text-xs font-bold text-slate-700 uppercase tracking-wide font-mono border-b border-slate-100 pb-1.5 flex items-center gap-1.5">
                       <GraduationCap className="w-4 h-4 text-blue-600" /> Student Profile
@@ -765,7 +660,6 @@ export default function AdminDashboard() {
                     </div>
                   </div>
 
-                  {/* Right part: Parent values */}
                   <div className="border border-slate-200 p-4 rounded-xl space-y-3.5 bg-slate-50/20">
                     <p className="text-xs font-bold text-slate-700 uppercase tracking-wide font-mono border-b border-slate-100 pb-1.5 flex items-center gap-1.5">
                       <Users className="w-4 h-4 text-amber-600" /> Paired Custodian Account
@@ -855,7 +749,6 @@ export default function AdminDashboard() {
                     />
                   </div>
 
-                  {/* Multiselect Class Grades Assigned */}
                   <div className="space-y-2 text-xs">
                     <label className="text-slate-500 font-semibold font-sans block">Classes Authorized to Teach</label>
                     <div className="flex gap-2 pt-1 font-mono text-[11px]">
@@ -895,7 +788,6 @@ export default function AdminDashboard() {
         {/* 3. FEE STRUCTURE & INLINE LEDGER */}
         {activeTab === 'fees' && (
           <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-xs space-y-6">
-            
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
               <div>
                 <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
@@ -905,7 +797,6 @@ export default function AdminDashboard() {
                 <p className="text-xs text-slate-400 mt-1">Configure structural class policies, view details of pending accounts, and collect payments.</p>
               </div>
 
-              {/* Class policy labels */}
               <div className="flex flex-wrap gap-2 text-[10px] font-mono font-bold text-slate-500">
                 <span className="px-2 py-1 bg-slate-50 border border-slate-200 rounded">Class 9: ₹15,000</span>
                 <span className="px-2 py-1 bg-slate-50 border border-slate-200 rounded">Class 10: ₹18,000</span>
@@ -915,9 +806,7 @@ export default function AdminDashboard() {
               </div>
             </div>
 
-            {/* Quick summary and ledger tools */}
             <div className="flex flex-col sm:flex-row gap-3.5 justify-between items-center bg-slate-50 p-4 rounded-xl border border-slate-100">
-              {/* Ledger search */}
               <div className="relative w-full sm:w-72">
                 <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-3" />
                 <input
@@ -929,7 +818,6 @@ export default function AdminDashboard() {
                 />
               </div>
 
-              {/* Filters */}
               <div className="flex items-center gap-2.5 text-xs font-semibold self-end sm:self-auto uppercase tracking-wide">
                 <span className="text-slate-400 font-mono text-[10px]">Filter Grade:</span>
                 <div className="flex bg-slate-200 p-0.5 rounded-lg text-[10px] font-mono">
@@ -947,15 +835,8 @@ export default function AdminDashboard() {
               </div>
             </div>
 
-            {/* Student Ledger List */}
-<<<<<<< HEAD
             <div className="border border-slate-200 rounded-xl overflow-x-auto shadow-2xs">
               <table className="w-full min-w-[800px] text-left border-collapse text-xs text-slate-500">
-=======
-            <div className="border border-slate-200 rounded-xl overflow-hidden shadow-2xs">
-              <div className="overflow-x-auto">
-              <table className="w-full text-left border-collapse text-xs text-slate-500 min-w-[640px]">
->>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
                 <thead className="bg-slate-50 border-b border-slate-200 text-[10px] uppercase font-mono text-slate-400 font-bold">
                   <tr>
                     <th className="py-3 px-4">Student</th>
@@ -1050,10 +931,6 @@ export default function AdminDashboard() {
                     })}
                 </tbody>
               </table>
-<<<<<<< HEAD
-=======
-              </div>
->>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
             </div>
           </div>
         )}
@@ -1079,15 +956,8 @@ export default function AdminDashboard() {
               />
             </div>
 
-<<<<<<< HEAD
             <div className="border border-slate-200 rounded-xl overflow-x-auto">
-              <table className="w-full min-w-[600px] text-xs text-left text-slate-500 border-collapse">
-=======
-            {/* Table layout */}
-            <div className="border border-slate-200 rounded-xl overflow-hidden">
-              <div className="overflow-x-auto">
-              <table className="w-full text-xs text-left text-slate-500 border-collapse min-w-[560px]">
->>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
+              <table className="w-full min-w-[700px] text-xs text-left text-slate-500 border-collapse">
                 <thead className="text-[10px] text-slate-400 uppercase bg-slate-50 border-b border-slate-200 font-mono font-bold">
                   <tr>
                     <th className="py-3 px-4">Time</th>
@@ -1132,17 +1002,13 @@ export default function AdminDashboard() {
                     ))}
                 </tbody>
               </table>
-<<<<<<< HEAD
-=======
-              </div>
->>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
             </div>
           </div>
         )}
 
         {/* 5. CLASS TIMETABLE MANAGER */}
         {activeTab === 'timetable' && (
-          <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-xs space-y-6">
+          <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm space-y-6">
             <div>
               <h2 className="text-base font-bold text-slate-900 flex items-center gap-2">
                 <Calendar className="w-5 h-5 text-blue-600" />
@@ -1152,10 +1018,6 @@ export default function AdminDashboard() {
             </div>
 
             <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-<<<<<<< HEAD
-=======
-              {/* Creator Form */}
->>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
               <div className="border border-slate-200 p-5 rounded-2xl bg-slate-50/50 space-y-4">
                 <h3 className="text-xs font-bold text-slate-700 uppercase tracking-widest font-mono">Create Schedule Slot</h3>
                 
@@ -1259,10 +1121,6 @@ export default function AdminDashboard() {
                 </form>
               </div>
 
-<<<<<<< HEAD
-=======
-              {/* Schedules View */}
->>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
               <div className="xl:col-span-2 space-y-4">
                 <div className="bg-slate-50 p-2 border border-slate-200 rounded-xl flex items-center justify-between">
                   <span className="text-xs text-slate-500 font-bold ml-2 font-mono">Select Active Class Division for Filter:</span>
@@ -1326,7 +1184,7 @@ export default function AdminDashboard() {
       {/* OVERLAY MODALS FOR REGISTRY DIRECTORIES */}
       {showStudentListModal && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-4xl w-full max-h-[85vh] overflow-hidden flex flex-col">
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-5xl w-full max-h-[85vh] overflow-hidden flex flex-col">
             <div className="p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
               <div>
                 <h2 className="text-base font-black text-slate-950 flex items-center gap-2">
@@ -1356,24 +1214,22 @@ export default function AdminDashboard() {
             </div>
 
             <div className="p-5 overflow-y-auto flex-1 bg-white">
-<<<<<<< HEAD
+              {/* ✅ ADDED OVERFLOW-X-AUTO AND INCREASED MIN-W TO ACCOMMODATE THE PARENT LOGIN COLUMN */}
               <div className="border border-slate-200 rounded-xl overflow-x-auto">
-                <table className="w-full min-w-[1000px] text-xs text-left text-slate-500 border-collapse">
-=======
-              <div className="border border-slate-200 rounded-xl overflow-hidden">
-                <table className="w-full text-xs text-left text-slate-500 border-collapse">
->>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
+                <table className="w-full min-w-[1250px] text-xs text-left text-slate-500 border-collapse table-fixed">
                   <thead className="text-[10px] text-slate-400 uppercase bg-slate-50 border-b border-slate-200 font-mono font-bold">
                     <tr>
-                      <th className="py-2.5 px-3">Student Details</th>
-                      <th className="py-2.5 px-3">Parent Details</th>
-                      <th className="py-2.5 px-3">Class Grade</th>
-                      <th className="py-2.5 px-3">Login Credentials Info</th>
-                      <th className="py-2.5 px-3">Total Fee</th>
-                      <th className="py-2.5 px-3">Paid Fee</th>
-                      <th className="py-2.5 px-3">Pending Fee</th>
-                      <th className="py-2.5 px-3">Fee Status</th>
-                      <th className="py-2.5 px-3 text-center">Action</th>
+                      <th className="py-2.5 px-3 w-[160px]">Student Details</th>
+                      <th className="py-2.5 px-3 w-[160px]">Parent Details</th>
+                      <th className="py-2.5 px-3 w-[90px]">Class Grade</th>
+                      <th className="py-2.5 px-3 w-[180px]">Student Credentials</th>
+                      {/* ✅ NEW COLUMN ADDED HERE FOR PARENT LOGIN INFO */}
+                      <th className="py-2.5 px-3 w-[180px] bg-amber-50/40 text-amber-900">Parent Credentials</th>
+                      <th className="py-2.5 px-3 w-[90px]">Total Fee</th>
+                      <th className="py-2.5 px-3 w-[90px]">Paid Fee</th>
+                      <th className="py-2.5 px-3 w-[90px]">Pending Fee</th>
+                      <th className="py-2.5 px-3 w-[100px]">Fee Status</th>
+                      <th className="py-2.5 px-3 w-[70px] text-center">Action</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100 bg-white">
@@ -1388,17 +1244,17 @@ export default function AdminDashboard() {
                         const linkedParent = parents.find(p => p.childId === s.id);
                         return (
                           <tr key={s.id} className="hover:bg-slate-50 transition-colors">
-                            <td className="py-2.5 px-3">
+                            <td className="py-2.5 px-3 whitespace-normal break-words">
                               <p className="font-bold text-slate-900">{s.name}</p>
                               <p className="text-[10px] text-slate-400 font-mono">{s.studentIdCardNum}</p>
                               {(s.seatNumber || s.benchNumber) && (
-                                <div className="mt-1 flex gap-1.5 text-[9px] font-mono leading-relaxed">
+                                <div className="mt-1 flex flex-wrap gap-1 text-[9px] font-mono leading-relaxed">
                                   {s.seatNumber && <span className="bg-blue-50 text-blue-700 border border-blue-105 px-1.5 py-0.2 rounded">Seat: {s.seatNumber}</span>}
                                   {s.benchNumber && <span className="bg-purple-50 text-purple-700 border border-purple-105 px-1.5 py-0.2 rounded">Bench: {s.benchNumber}</span>}
                                 </div>
                               )}
                             </td>
-                            <td className="py-2.5 px-3">
+                            <td className="py-2.5 px-3 whitespace-normal break-words">
                               {linkedParent ? (
                                 <div>
                                   <p className="font-bold text-slate-700">{linkedParent.name}</p>
@@ -1413,9 +1269,20 @@ export default function AdminDashboard() {
                             </td>
                             <td className="py-2.5 px-3 whitespace-nowrap bg-blue-50/30">
                               <div className="flex flex-col text-[10px] space-y-0.5">
-                                <span className="font-semibold text-slate-700">Login ID: <span className="font-bold text-blue-750 font-sans text-blue-700">{s.username}</span></span>
+                                <span className="font-semibold text-slate-700">Login ID: <span className="font-bold text-blue-700 font-mono">{s.username}</span></span>
                                 <span className="text-slate-500 font-mono">Password: <span className="font-bold text-slate-700">{s.username}123</span></span>
                               </div>
+                            </td>
+                            {/* ✅ NEW DYNAMIC DATA CELL FOR PARENT LOGIN DETAILS */}
+                            <td className="py-2.5 px-3 whitespace-nowrap bg-amber-50/20">
+                              {linkedParent ? (
+                                <div className="flex flex-col text-[10px] space-y-0.5">
+                                  <span className="font-semibold text-amber-900">Login ID: <span className="font-bold text-amber-800 font-mono">{linkedParent.username}</span></span>
+                                  <span className="text-slate-550 font-mono">Password: <span className="font-bold text-slate-700">{linkedParent.username}123</span></span>
+                                </div>
+                              ) : (
+                                <span className="text-slate-400 italic text-[10px]">N/A</span>
+                              )}
                             </td>
                             <td className="py-2.5 px-3 font-mono font-bold text-slate-700">₹{s.totalFee}</td>
                             <td className="py-2.5 px-3 font-mono text-emerald-600 font-bold">₹{s.paidFee}</td>
@@ -1472,7 +1339,7 @@ export default function AdminDashboard() {
 
       {showTeacherListModal && (
         <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-3xl w-full max-h-[80vh] overflow-hidden flex flex-col">
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-2xl max-w-4xl w-full max-h-[80vh] overflow-hidden flex flex-col">
             <div className="p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
               <div>
                 <h2 className="text-base font-black text-slate-950 flex items-center gap-2">
@@ -1502,13 +1369,8 @@ export default function AdminDashboard() {
             </div>
 
             <div className="p-5 overflow-y-auto flex-1 bg-white">
-<<<<<<< HEAD
               <div className="border border-slate-200 rounded-xl overflow-x-auto">
                 <table className="w-full min-w-[800px] text-xs text-left text-slate-500 border-collapse">
-=======
-              <div className="border border-slate-200 rounded-xl overflow-hidden">
-                <table className="w-full text-xs text-left text-slate-500 border-collapse">
->>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
                   <thead className="text-[10px] text-slate-400 uppercase bg-slate-50 border-b border-slate-200 font-mono font-bold">
                     <tr>
                       <th className="py-2.5 px-3">Faculty Name</th>
@@ -1593,11 +1455,5 @@ export default function AdminDashboard() {
         </div>
       )}
     </div>
-<<<<<<< HEAD
   );
 }
-=======
-    </>
-  );
-}
->>>>>>> 2c5af25b4c51fd48044c536d2f5594fad5002b1e
