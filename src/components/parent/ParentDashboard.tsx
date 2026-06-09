@@ -308,25 +308,28 @@ export default function ParentDashboard() {
                   </div>
 
                   {childRecords.length > 0 && (
-                    <div className="border border-slate-100 rounded-lg divide-y divide-slate-100 max-h-[170px] overflow-y-auto pr-1">
-                      {[...childRecords].reverse().slice(0, 5).map(r => (
-                        <div key={r.id} className="p-2.5 text-[11px] font-sans flex items-center justify-between hover:bg-slate-50/40 transition-colors">
-                          <div className="min-w-0">
-                            <span className="font-bold text-slate-800">{r.subject}</span>
-                            <span className="text-slate-400 font-mono ml-2">({r.date})</span>
-                            {r.remarks && <p className="text-[10px] text-slate-400 font-normal italic mt-0.5">Note: "{r.remarks}"</p>}
+                    // Added overflow-x-auto and min-w here
+                    <div className="border border-slate-100 rounded-lg max-h-[170px] overflow-y-auto overflow-x-auto pr-1">
+                      <div className="min-w-[500px] divide-y divide-slate-100">
+                        {[...childRecords].reverse().slice(0, 5).map(r => (
+                          <div key={r.id} className="p-2.5 text-[11px] font-sans flex items-center justify-between hover:bg-slate-50/40 transition-colors">
+                            <div className="min-w-0">
+                              <span className="font-bold text-slate-800">{r.subject}</span>
+                              <span className="text-slate-400 font-mono ml-2">({r.date})</span>
+                              {r.remarks && <p className="text-[10px] text-slate-400 font-normal italic mt-0.5">Note: "{r.remarks}"</p>}
+                            </div>
+                            <span className={`px-2 py-0.5 rounded font-black text-[9px] font-mono ${
+                              r.status === 'PRESENT'
+                                ? 'bg-emerald-50 border border-emerald-200 text-emerald-800'
+                                : r.status === 'ABSENT'
+                                ? 'bg-rose-50 border border-rose-200 text-rose-800'
+                                : 'bg-amber-50 border border-amber-200 text-amber-800'
+                            }`}>
+                              {r.status}
+                            </span>
                           </div>
-                          <span className={`px-2 py-0.5 rounded font-black text-[9px] font-mono ${
-                            r.status === 'PRESENT'
-                              ? 'bg-emerald-50 border border-emerald-200 text-emerald-800'
-                              : r.status === 'ABSENT'
-                              ? 'bg-rose-50 border border-rose-200 text-rose-800'
-                              : 'bg-amber-50 border border-amber-200 text-amber-800'
-                          }`}>
-                            {r.status}
-                          </span>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
                   )}
                 </div>
@@ -343,56 +346,59 @@ export default function ParentDashboard() {
               {childAssignments.length === 0 ? (
                 <p className="text-xs italic text-slate-400 py-6 text-center font-sans">No assignments declared for {child.name}'s group yet.</p>
               ) : (
-                <div className="space-y-4 max-h-[400px] overflow-y-auto pr-1">
-                  {childAssignments.map(asg => {
-                    const submission = getChildSubmission(asg.id);
+                // Added overflow-x-auto and min-w here
+                <div className="max-h-[400px] overflow-y-auto overflow-x-auto pr-1">
+                  <div className="min-w-[600px] space-y-4">
+                    {childAssignments.map(asg => {
+                      const submission = getChildSubmission(asg.id);
 
-                    return (
-                      <div key={asg.id} className="border border-slate-200 rounded-lg p-4 bg-slate-50/50 space-y-3 hover:border-blue-100 transition-colors">
-                        <div className="flex flex-col sm:flex-row justify-between items-start gap-2 border-b border-slate-100 pb-2.5">
-                          <div>
-                            <span className="px-2 py-0.5 bg-slate-100 text-[10px] text-slate-500 font-extrabold rounded uppercase mr-2 tracking-wide font-mono">
-                              {asg.subject}
-                            </span>
-                            <span className="text-xs font-bold text-slate-800 font-sans">{asg.title}</span>
-                            <p className="text-[10px] text-slate-400 mt-1 font-mono">Teacher: {asg.teacherName} • Target Due: {new Date(asg.dueDate).toLocaleString()}</p>
+                      return (
+                        <div key={asg.id} className="border border-slate-200 rounded-lg p-4 bg-slate-50/50 space-y-3 hover:border-blue-100 transition-colors">
+                          <div className="flex flex-col sm:flex-row justify-between items-start gap-2 border-b border-slate-100 pb-2.5">
+                            <div>
+                              <span className="px-2 py-0.5 bg-slate-100 text-[10px] text-slate-500 font-extrabold rounded uppercase mr-2 tracking-wide font-mono">
+                                {asg.subject}
+                              </span>
+                              <span className="text-xs font-bold text-slate-800 font-sans">{asg.title}</span>
+                              <p className="text-[10px] text-slate-400 mt-1 font-mono">Teacher: {asg.teacherName} • Target Due: {new Date(asg.dueDate).toLocaleString()}</p>
+                            </div>
+
+                            {submission ? (
+                              <span className={`px-2 py-0.5 rounded text-[10px] font-bold flex items-center gap-1 ${
+                                submission.status === 'GRADED' 
+                                  ? 'bg-emerald-50 text-emerald-700 border border-emerald-100 font-mono' 
+                                  : 'bg-blue-50 text-blue-700 border border-blue-100 font-mono'
+                              }`}>
+                                <CheckCircle2 className="w-3.5 h-3.5" />
+                                {submission.status === 'GRADED' ? `Grade Received: ${submission.grade}` : 'Submitted - Locked'}
+                              </span>
+                            ) : (
+                              <span className="px-2 py-0.5 bg-slate-100 text-slate-650 rounded text-[10px] border border-dashed border-slate-300 font-semibold flex items-center gap-1 font-mono">
+                                ⚠️ Uncompleted Solution
+                              </span>
+                            )}
                           </div>
 
-                          {submission ? (
-                            <span className={`px-2 py-0.5 rounded text-[10px] font-bold flex items-center gap-1 ${
-                              submission.status === 'GRADED' 
-                                ? 'bg-emerald-50 text-emerald-700 border border-emerald-100 font-mono' 
-                                : 'bg-blue-50 text-blue-700 border border-blue-100 font-mono'
-                            }`}>
-                              <CheckCircle2 className="w-3.5 h-3.5" />
-                              {submission.status === 'GRADED' ? `Grade Received: ${submission.grade}` : 'Submitted - Locked'}
-                            </span>
-                          ) : (
-                            <span className="px-2 py-0.5 bg-slate-100 text-slate-650 rounded text-[10px] border border-dashed border-slate-300 font-semibold flex items-center gap-1 font-mono">
-                              ⚠️ Uncompleted Solution
-                            </span>
+                          {/* Guidelines */}
+                          <div className="text-xs text-slate-650">
+                            <p className="font-semibold text-slate-700">Assignment Requirement details:</p>
+                            <p className="mt-1 leading-relaxed text-slate-500">{asg.description}</p>
+                          </div>
+
+                          {/* Optional teacher evaluation review */}
+                          {submission && submission.status === 'GRADED' && (
+                            <div className="bg-emerald-50/50 p-2.5 rounded-lg border border-emerald-100 text-xs">
+                              <p className="font-bold text-emerald-800 flex items-center gap-1">
+                                <Award className="w-3.5 h-3.5" /> Academic Evaluation Published:
+                              </p>
+                              <p className="text-slate-800 font-mono text-[11px] font-bold mt-1.5">Score Grade: {submission.grade}</p>
+                              <p className="text-slate-605 text-slate-500 italic mt-1 font-normal font-sans">Feedback remarks: "{submission.feedback}"</p>
+                            </div>
                           )}
                         </div>
-
-                        {/* Guidelines */}
-                        <div className="text-xs text-slate-650">
-                          <p className="font-semibold text-slate-700">Assignment Requirement details:</p>
-                          <p className="mt-1 leading-relaxed text-slate-500">{asg.description}</p>
-                        </div>
-
-                        {/* Optional teacher evaluation review */}
-                        {submission && submission.status === 'GRADED' && (
-                          <div className="bg-emerald-50/50 p-2.5 rounded-lg border border-emerald-100 text-xs">
-                            <p className="font-bold text-emerald-800 flex items-center gap-1">
-                              <Award className="w-3.5 h-3.5" /> Academic Evaluation Published:
-                            </p>
-                            <p className="text-slate-800 font-mono text-[11px] font-bold mt-1.5">Score Grade: {submission.grade}</p>
-                            <p className="text-slate-605 text-slate-500 italic mt-1 font-normal font-sans">Feedback remarks: "{submission.feedback}"</p>
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
               )}
             </div>
@@ -461,35 +467,38 @@ export default function ParentDashboard() {
                   <h3 className="text-xs font-extrabold text-slate-700 uppercase tracking-wide font-mono">Private Chat Feed</h3>
                 </div>
 
-                <div className="flex-1 overflow-y-auto space-y-3.5 pr-1 py-1">
-                  {parentMessages.length === 0 ? (
-                    <div className="text-center py-12 font-sans">
-                      <p className="text-xs text-slate-400 italic leading-normal">
-                        No private messaging transcripts logged for this account. Keep transparent communication channel active.
-                      </p>
-                    </div>
-                  ) : (
-                    parentMessages.map(msg => {
-                      const isMe = msg.senderId === parent.id;
-                      const decryptedText = decryptData(msg.content, 'SCHOOL_SECRET_KEY');
+                {/* Added overflow-x-auto and min-w here */}
+                <div className="flex-1 overflow-y-auto overflow-x-auto pr-1 py-1">
+                  <div className="min-w-[400px] space-y-3.5">
+                    {parentMessages.length === 0 ? (
+                      <div className="text-center py-12 font-sans">
+                        <p className="text-xs text-slate-400 italic leading-normal">
+                          No private messaging transcripts logged for this account. Keep transparent communication channel active.
+                        </p>
+                      </div>
+                    ) : (
+                      parentMessages.map(msg => {
+                        const isMe = msg.senderId === parent.id;
+                        const decryptedText = decryptData(msg.content, 'SCHOOL_SECRET_KEY');
 
-                      return (
-                        <div key={msg.id} className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}>
-                          <div className={`p-3 rounded-lg text-xs max-w-sm ${
-                            isMe 
-                              ? 'bg-blue-600 text-white rounded-br-none' 
-                              : 'bg-white border border-slate-200 text-slate-700 rounded-bl-none shadow-xs'
-                          }`}>
-                            <div className="flex items-center gap-1 opacity-75 text-[9px] mb-1 font-mono justify-between">
-                              <span>{isMe ? 'You' : msg.senderName} • {new Date(msg.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
-                              <span className="flex items-center gap-0.5 font-sans font-bold"><Lock className="w-2.5 h-2.5 text-blue-300" /> Private</span>
+                        return (
+                          <div key={msg.id} className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}>
+                            <div className={`p-3 rounded-lg text-xs max-w-sm ${
+                              isMe 
+                                ? 'bg-blue-600 text-white rounded-br-none' 
+                                : 'bg-white border border-slate-200 text-slate-700 rounded-bl-none shadow-xs'
+                            }`}>
+                              <div className="flex items-center gap-1 opacity-75 text-[9px] mb-1 font-mono justify-between">
+                                <span>{isMe ? 'You' : msg.senderName} • {new Date(msg.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                                <span className="flex items-center gap-0.5 font-sans font-bold"><Lock className="w-2.5 h-2.5 text-blue-300" /> Private</span>
+                              </div>
+                              <p className="leading-relaxed font-sans">{decryptedText}</p>
                             </div>
-                            <p className="leading-relaxed font-sans">{decryptedText}</p>
                           </div>
-                        </div>
-                      );
-                    })
-                  )}
+                        );
+                      })
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -498,6 +507,7 @@ export default function ParentDashboard() {
         )}
 
         {activeTab === 'faculty-directory' && (
+          // जर FacultyDirectory component मध्ये tables असतील, तर त्याच्या फाइल मध्ये बदल करावे लागतील.
           <FacultyDirectory teachers={teachers} />
         )}
 
